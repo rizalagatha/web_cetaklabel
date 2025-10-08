@@ -1,0 +1,494 @@
+:root {
+  font-family: "Poppins", sans-serif;
+  --primary-color: #d32f2f;
+  --secondary-color: #007bff;
+  --success-color: #28a745;
+  --background-color: #f4f6f8;
+  --surface-color: #ffffff;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --border-color: #e0e0e0;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--surface-color);
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+.main-header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--text-primary);
+}
+.logout-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background-color 0.2s;
+}
+.logout-button:hover {
+  background-color: #f1f1f1;
+}
+
+.search-box {
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
+.search-box .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.search-box input {
+  flex-grow: 1;
+  padding: 12px 12px 12px 40px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-box input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+.search-box button {
+  padding: 12px 20px;
+  font-size: 16px;
+  margin-left: -1px; /* Agar menyatu dengan input */
+  border: 1px solid var(--secondary-color);
+  background-color: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  font-weight: 500;
+}
+.error-text {
+  color: var(--primary-color);
+  background-color: rgba(211, 47, 47, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.label-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.print-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Jarak antara ikon dan teks */
+  transition: background-color 0.2s;
+}
+.print-button:hover {
+  background-color: #218838;
+}
+
+.preview-title {
+  text-align: center;
+  margin-top: 40px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* --- Style untuk Preview di Layar --- */
+.label-preview {
+  border: 2px dashed var(--border-color);
+  padding: 10px;
+  width: 100%;
+  max-width: 7cm;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+.label-preview .print-top-no-packing {
+  font-size: 10pt;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.label-preview .print-barcode-area {
+  width: 90%;
+  margin: 5px 0;
+}
+.label-preview .print-barcode-area svg {
+  height: 50px;
+  width: 100%;
+}
+.label-preview .print-middle-info {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  font-size: 8pt;
+  margin: 5px 0;
+}
+.label-preview .print-middle-info span {
+  flex-basis: 48%;
+}
+.label-preview .print-spk-no {
+  text-align: left;
+}
+.label-preview .print-qty {
+  text-align: right;
+}
+.label-preview .print-nama-spk {
+  font-size: 8pt;
+  margin: 5px 0;
+}
+.label-preview .print-detail-ukuran {
+  font-size: 7pt;
+  margin: 5px 0 0 0;
+}
+
+/* Styling untuk kontainer hasil pencarian */
+.search-results {
+  list-style-type: none;
+  padding: 0;
+  margin: -10px 0 20px 0;
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-results li {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+  color: var(--text-primary);
+}
+
+.search-results li:last-child {
+  border-bottom: none;
+}
+.search-results li:hover {
+  background-color: #f7f7f7;
+}
+.spk-result {
+  color: #757575;
+  font-size: 0.9em;
+  margin-left: 8px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.toolbar button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.history-list {
+  border-top: 1px solid var(--border-color);
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Memberi jarak antara checkbox dan info */
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-item:hover {
+  background-color: #f8f9fa;
+}
+
+.history-info {
+  flex-grow: 1; /* Biarkan info mengambil ruang sisa */
+  display: flex;
+  flex-direction: column;
+}
+
+.history-pack-nomor {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.history-spk-nomor,
+.history-tanggal {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.view-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: 1px solid var(--secondary-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Style untuk Modal Preview Cetak */
+.print-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.print-preview-modal {
+  background-color: var(--surface-color);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 7cm;
+  box-sizing: border-box;
+}
+
+.print-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.print-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.empty-history-text {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-secondary);
+}
+
+/* Sesuaikan style label agar cocok di dalam modal */
+.label-print {
+  border: 1px solid black;
+}
+
+.error-box {
+  background-color: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  color: #c62828;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* ============================================= */
+/* --- ATURAN CETAK FINAL (SESUAI SKETSA) --- */
+/* ============================================= */
+@media print {
+  @page {
+    size: 7cm 5cm;
+    margin: 0;
+  }
+
+  /* Sembunyikan semua elemen yang punya class 'no-print' */
+  .no-print {
+    display: none;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  /* Pastikan elemen label dan semua isinya terlihat */
+  .label-print,
+  .label-print * {
+    visibility: visible;
+  }
+
+  /* Atur posisi dan ukuran label agar mengisi halaman */
+  .label-print {
+    position: absolute;
+    left: 3mm;
+    top: 2mm;
+    width: calc(7cm - 6mm); /* Perbesar ke kanan */
+    height: calc(5cm - 5mm); /* Perbesar ke bawah */
+    padding: 0.2cm;
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-family: sans-serif;
+    background: white; /* Tambahkan background putih */
+  }
+
+  /* --- Top (NO PACKING) --- */
+  .print-top-no-packing {
+    font-size: 10pt;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding-bottom: 0.1cm;
+  }
+
+  /* --- Barcode Area --- */
+  .print-barcode-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0.4cm 0 0.2cm 0; /* Margin atas lebih besar */
+    padding: 0;
+    overflow: hidden;
+  }
+  .print-barcode-area svg {
+    height: 2.8cm !important; /* Kurangi tinggi barcode */
+    width: 100% !important;
+  }
+  .print-barcode-area text {
+    /* Sembunyikan teks di bawah barcode */
+    display: none;
+  }
+
+  /* --- Middle Info (NO SPK, QTY) --- */
+  .print-middle-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 7pt;
+    margin-top: 0.2cm; /* Tambah margin atas */
+    padding: 0;
+    line-height: 1;
+    border-top: 1px solid black;
+    padding-top: 0.1cm;
+  }
+  .print-middle-info span {
+    flex-basis: 48%; /* Bagikan ruang hampir merata */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .print-spk-no {
+    text-align: left;
+  }
+  .print-qty {
+    text-align: right;
+  }
+
+  /* --- Nama SPK --- */
+  .print-nama-spk {
+    font-size: 7pt;
+    margin: 0.1cm 0 0 0;
+    padding: 0;
+    line-height: 1;
+  }
+
+  /* --- Detail Ukuran --- */
+  .print-detail-ukuran {
+    font-size: 6pt; /* Font paling kecil untuk detail */
+    margin: 0.1cm 0 0 0;
+    padding: 0;
+    line-height: 1;
+  }
+}
