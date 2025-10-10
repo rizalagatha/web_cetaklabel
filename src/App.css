@@ -146,10 +146,15 @@ h1 {
 .label-preview .print-barcode-area {
   width: 90%;
   margin: 5px 0;
+  position: relative;
 }
 .label-preview .print-barcode-area svg {
-  height: 50px;
+  height: 2.8cm !important;
   width: 100%;
+  display: block;
+}
+.label-preview .print-barcode-area > *:not(svg) {
+  display: none !important;
 }
 .label-preview .print-middle-info {
   display: flex;
@@ -223,47 +228,61 @@ h1 {
   cursor: pointer;
 }
 
+/* --- History List --- */
+.history-list {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
 .history-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   background-color: #f8f9fa;
   border-bottom: 1px solid var(--border-color);
   font-size: 14px;
   color: var(--text-secondary);
 }
-
-.history-list {
-  border-top: 1px solid var(--border-color);
-}
-
 .history-item {
   display: flex;
   align-items: center;
-  gap: 15px; /* Memberi jarak antara checkbox dan info */
-  padding: 16px;
+  gap: 12px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s;
 }
 
-.history-item:hover {
-  background-color: #f8f9fa;
+.history-item.selected {
+  background-color: rgba(0, 123, 255, 0.08);
 }
 
+.history-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--secondary-color);
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
 .history-info {
-  flex-grow: 1; /* Biarkan info mengambil ruang sisa */
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
 }
-
 .history-pack-nomor {
   font-weight: 700;
   color: var(--text-primary);
 }
-
 .history-spk-nomor,
 .history-tanggal {
   font-size: 12px;
+  color: var(--text-secondary);
+}
+.loading-text,
+.empty-history-text {
+  text-align: center;
+  padding: 30px;
   color: var(--text-secondary);
 }
 
@@ -365,21 +384,157 @@ h1 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
+.date-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.date-group label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.date-group input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+/* --- Filter Bar --- */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+.date-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.date-group label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.date-group input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+.filter-bar button {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--secondary-color);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* --- Pagination --- */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 15px;
+  font-size: 14px;
+}
+.pagination-controls button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+.pagination-controls button:disabled {
+  background-color: #f8f9fa;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* === BATCH MODE STYLES === */
+.batch-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.select-all-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.select-all-checkbox input {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.batch-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.batch-actions span {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.batch-print-button {
+  padding: 10px 20px;
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.batch-print-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.batch-print-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 /* ============================================= */
 /* --- ATURAN CETAK FINAL (SESUAI SKETSA) --- */
 /* ============================================= */
 @media print {
   @page {
-    size: 7cm 5cm;
+    size: 14cm 5cm landscape;
     margin: 0;
   }
 
-  /* Sembunyikan semua elemen yang punya class 'no-print' */
   .no-print {
     display: none;
   }
@@ -393,19 +548,46 @@ h1 {
     visibility: hidden;
   }
 
-  /* Pastikan elemen label dan semua isinya terlihat */
+  /* Tampilkan label dan batch-page */
   .label-print,
-  .label-print * {
+  .label-print *,
+  .batch-page,
+  .batch-page * {
     visibility: visible;
   }
 
-  /* Atur posisi dan ukuran label agar mengisi halaman */
+  /* Container wrapper untuk batch */
+  div[style*="display: none"] > div {
+    visibility: visible !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    grid-gap: 0;
+    width: 14cm;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    page-break-after: always;
+  }
+
+  /* Batch page - HAPUS page-break */
+  .batch-page {
+    position: relative;
+    width: 7cm;
+    height: 5cm;
+    margin: 0;
+    padding: 0;
+    page-break-inside: avoid;
+    display: block;
+  }
+
+  /* Label */
   .label-print {
     position: absolute;
-    left: 3mm;
-    top: 2mm;
-    width: calc(7cm - 6mm); /* Perbesar ke kanan */
-    height: calc(5cm - 5mm); /* Perbesar ke bawah */
+    left: 5mm;
+    top: 1mm;
+    width: calc(7cm - 6mm);
+    height: calc(5cm - 5mm);
     padding: 0.2cm;
     border: 1px solid black;
     box-sizing: border-box;
@@ -415,7 +597,7 @@ h1 {
     align-items: center;
     text-align: center;
     font-family: sans-serif;
-    background: white; /* Tambahkan background putih */
+    background: white;
   }
 
   /* --- Top (NO PACKING) --- */
@@ -437,17 +619,21 @@ h1 {
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 0.4cm 0 0.2cm 0; /* Margin atas lebih besar */
+    margin: 0.4cm 0 0.2cm 0;
     padding: 0;
     overflow: hidden;
+    position: relative;
   }
   .print-barcode-area svg {
-    height: 2.8cm !important; /* Kurangi tinggi barcode */
+    height: 2.8cm !important;
     width: 100% !important;
+    display: block;
   }
   .print-barcode-area text {
-    /* Sembunyikan teks di bawah barcode */
     display: none;
+  }
+  .print-barcode-area > *:not(svg) {
+    display: none !important;
   }
 
   /* --- Middle Info (NO SPK, QTY) --- */
@@ -456,14 +642,15 @@ h1 {
     justify-content: space-between;
     width: 100%;
     font-size: 7pt;
-    margin-top: 0.2cm; /* Tambah margin atas */
+    font-weight: bold;
+    margin-top: 0.2cm;
     padding: 0;
     line-height: 1;
     border-top: 1px solid black;
     padding-top: 0.1cm;
   }
   .print-middle-info span {
-    flex-basis: 48%; /* Bagikan ruang hampir merata */
+    flex-basis: 48%;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -479,6 +666,7 @@ h1 {
   /* --- Nama SPK --- */
   .print-nama-spk {
     font-size: 7pt;
+    font-weight: bold;
     margin: 0.1cm 0 0 0;
     padding: 0;
     line-height: 1;
@@ -486,7 +674,8 @@ h1 {
 
   /* --- Detail Ukuran --- */
   .print-detail-ukuran {
-    font-size: 6pt; /* Font paling kecil untuk detail */
+    font-size: 6pt;
+    font-weight: bold;
     margin: 0.1cm 0 0 0;
     padding: 0;
     line-height: 1;
