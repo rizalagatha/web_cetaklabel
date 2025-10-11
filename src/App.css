@@ -12,18 +12,15 @@
 
 .container {
   width: 100%;
-  max-width: 500px;
+  max-width: 800px;
   background-color: var(--surface-color);
-  padding: 32px;
+  padding: 24px 32px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   margin: 0 auto;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
+/* --- Header & Toolbar --- */
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -32,238 +29,117 @@ h1 {
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
 }
+
 .main-header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 22px; /* Sedikit diperkecil agar lebih elegan */
+  font-weight: 600;
   color: var(--text-primary);
 }
 .logout-button {
-  background: none;
+  background-color: #f1f5f9; /* Warna abu-abu muda */
   border: none;
-  padding: 8px;
-  border-radius: 5px;
+  padding: 10px;
+  border-radius: 50%; /* Membuatnya menjadi lingkaran */
   cursor: pointer;
-  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.2s;
 }
+
 .logout-button:hover {
-  background-color: #f1f1f1;
+  background-color: #e2e8f0; /* Sedikit lebih gelap saat hover */
 }
 
-.search-box {
-  display: flex;
-  margin-bottom: 20px;
-  position: relative;
+.logout-button svg {
+  color: var(--text-secondary); /* Warna ikon */
 }
-.search-box .search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-secondary);
-  pointer-events: none;
-}
-.search-box input {
-  flex-grow: 1;
-  padding: 12px 12px 12px 40px;
-  font-size: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.search-box input:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-.search-box button {
-  padding: 12px 20px;
-  font-size: 16px;
-  margin-left: -1px; /* Agar menyatu dengan input */
-  border: 1px solid var(--secondary-color);
-  background-color: var(--secondary-color);
-  color: white;
-  cursor: pointer;
-  border-radius: 0 8px 8px 0;
-  font-weight: 500;
-}
-.error-text {
-  color: var(--primary-color);
-  background-color: rgba(211, 47, 47, 0.1);
-  padding: 10px;
-  border-radius: 6px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.label-container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.print-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: var(--success-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px; /* Jarak antara ikon dan teks */
-  transition: background-color 0.2s;
-}
-.print-button:hover {
-  background-color: #218838;
-}
-
-.preview-title {
-  text-align: center;
-  margin-top: 40px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-/* --- Style untuk Preview di Layar --- */
-.label-preview {
-  border: 2px dashed var(--border-color);
-  padding: 10px;
-  width: 100%;
-  max-width: 7cm;
-  margin: 10px auto;
-  box-sizing: border-box;
-}
-.label-preview .print-top-no-packing {
-  font-size: 10pt;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-.label-preview .print-barcode-area {
-  width: 90%;
-  margin: 5px 0;
-  position: relative;
-}
-.label-preview .print-barcode-area svg {
-  height: 2.8cm !important;
-  width: 100%;
-  display: block;
-}
-.label-preview .print-barcode-area > *:not(svg) {
-  display: none !important;
-}
-.label-preview .print-middle-info {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  font-size: 8pt;
-  margin: 5px 0;
-}
-.label-preview .print-middle-info span {
-  flex-basis: 48%;
-}
-.label-preview .print-spk-no {
-  text-align: left;
-}
-.label-preview .print-qty {
-  text-align: right;
-}
-.label-preview .print-nama-spk {
-  font-size: 8pt;
-  margin: 5px 0;
-}
-.label-preview .print-detail-ukuran {
-  font-size: 7pt;
-  margin: 5px 0 0 0;
-}
-
-/* Styling untuk kontainer hasil pencarian */
-.search-results {
-  list-style-type: none;
-  padding: 0;
-  margin: -10px 0 20px 0;
-  border: 1px solid var(--border-color);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  max-height: 200px;
-  overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.search-results li {
-  padding: 12px 16px;
-  cursor: pointer;
-  border-bottom: 1px solid #f1f1f1;
-  color: var(--text-primary);
-}
-
-.search-results li:last-child {
-  border-bottom: none;
-}
-.search-results li:hover {
-  background-color: #f7f7f7;
-}
-.spk-result {
-  color: #757575;
-  font-size: 0.9em;
-  margin-left: 8px;
-}
-
 .toolbar {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 16px;
 }
-
-.toolbar button {
+.refresh-button {
   background-color: #6c757d;
   color: white;
   border: none;
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+}
+.print-button {
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
-/* --- History List --- */
+/* --- Filter & History --- */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center; /* Ubah ke center */
+  padding: 12px;
+  background-color: transparent; /* Hapus background */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: none; /* Hapus border */
+}
+.date-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1; /* Biarkan input mengambil ruang yang sama */
+}
+.date-group label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding-left: 4px;
+}
+.date-group input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  background-color: var(--surface-color); /* Latar putih */
+}
+.filter-bar button {
+  height: 42px; /* Samakan tinggi dengan input */
+  margin-top: 22px; /* Sejajarkan dengan input */
+  padding: 0 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-bar button:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
 .history-list {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
 }
-.history-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 14px;
-  color: var(--text-secondary);
-}
 .history-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.2s;
 }
-
-.history-item.selected {
-  background-color: rgba(0, 123, 255, 0.08);
-}
-
-.history-checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: var(--secondary-color);
-}
-
 .history-item:last-child {
   border-bottom: none;
 }
@@ -272,20 +148,12 @@ h1 {
 }
 .history-pack-nomor {
   font-weight: 700;
-  color: var(--text-primary);
 }
 .history-spk-nomor,
 .history-tanggal {
   font-size: 12px;
   color: var(--text-secondary);
 }
-.loading-text,
-.empty-history-text {
-  text-align: center;
-  padding: 30px;
-  color: var(--text-secondary);
-}
-
 .view-button {
   padding: 8px 16px;
   font-size: 14px;
@@ -295,157 +163,14 @@ h1 {
   cursor: pointer;
   border-radius: 6px;
 }
-
-/* Style untuk Modal Preview Cetak */
-.print-preview-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.print-preview-modal {
-  background-color: var(--surface-color);
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  width: 7cm;
-  box-sizing: border-box;
-}
-
-.print-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.print-header h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.close-button {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--text-secondary);
-}
-
+.loading-text,
 .empty-history-text {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
   color: var(--text-secondary);
 }
 
-/* Sesuaikan style label agar cocok di dalam modal */
-.label-print {
-  border: 1px solid black;
-}
-
-.error-box {
-  background-color: rgba(211, 47, 47, 0.1);
-  border: 1px solid rgba(211, 47, 47, 0.2);
-  color: #c62828;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  color: var(--text-secondary);
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--primary-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.date-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.date-group label {
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-.date-group input {
-  padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-}
-
-/* --- Filter Bar --- */
-.filter-bar {
-  display: flex;
-  gap: 15px;
-  align-items: flex-end;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
-}
-.date-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.date-group label {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-.date-group input {
-  padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-}
-.filter-bar button {
-  padding: 9px 20px;
-  border-radius: 6px;
-  border: none;
-  background-color: var(--secondary-color);
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-/* --- Pagination --- */
+/* --- Pagination & Modal --- */
 .pagination-controls {
   display: flex;
   justify-content: center;
@@ -466,73 +191,185 @@ h1 {
   color: #ccc;
   cursor: not-allowed;
 }
-
-/* === BATCH MODE STYLES === */
-.batch-controls {
+.print-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.print-preview-modal {
+  background-color: var(--surface-color);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 14cm;
+  box-sizing: border-box;
+}
+.print-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
-
-.select-all-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--text-primary);
+.print-header h3 {
+  margin: 0;
+  font-size: 18px;
 }
-
-.select-all-checkbox input {
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-}
-
-.batch-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.batch-actions span {
-  font-size: 14px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.batch-print-button {
-  padding: 10px 20px;
-  background-color: var(--success-color);
-  color: white;
+.close-button {
+  background: none;
   border: none;
-  border-radius: 6px;
+  font-size: 24px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s;
+  color: var(--text-secondary);
+}
+.error-text {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.batch-print-button:hover:not(:disabled) {
-  background-color: #218838;
+/* --- Preview & Print CSS untuk QR Code --- */
+.label-preview {
+  padding: 10px;
+  margin: 10px auto;
+  border: 2px dashed #ccc;
+}
+.label-preview .label-print {
+  border: none;
+  position: static;
+  width: 100%;
+  height: auto;
+  min-height: 5cm;
+  padding: 10px;
 }
 
-.batch-print-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* === STYLING LABEL PRINT === */
+
+.label-print {
+  width: 7cm;
+  height: 5cm;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  padding: 0.15cm;
+  margin: 0;
 }
 
-/* ============================================= */
-/* --- ATURAN CETAK FINAL (SESUAI SKETSA) --- */
-/* ============================================= */
+/* Top Section: QR Code + Info (Dorong ke atas) */
+.print-top-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.15cm;
+  padding-bottom: 0.15cm;
+  border-bottom: 1px solid #000;
+  flex-shrink: 0;
+}
+
+.qr-code-box {
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  width: 70px;
+  height: 70px;
+}
+
+.qr-code-box svg {
+  width: 70px !important;
+  height: 70px !important;
+  display: block;
+}
+
+.print-info-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+  gap: 0;
+  padding: 2px 0;
+}
+
+.print-packing-no,
+.print-spk-no,
+.print-nomor-po,
+.print-qty {
+  display: block;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: left;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+}
+
+.print-packing-no {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* Middle Section: Nama SPK & Detail Ukuran (Fokus utama, besarkan font) */
+.print-middle-section {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.print-nama-spk {
+  margin: 0 !important;
+  padding: 2px 2px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #000 !important;
+  line-height: 1.1 !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.print-detail-ukuran {
+  margin: 0 !important;
+  padding: 2px 2px !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+  color: #000 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+/* === BATCH PAGE STYLING === */
+.batch-page {
+  width: 7cm;
+  height: 5cm;
+  margin: 0;
+  padding: 0;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+/* === PRINT MEDIA STYLES === */
 @media print {
   @page {
     size: 7cm 5cm landscape;
     margin: 0;
+    padding: 0;
   }
 
   .no-print {
@@ -548,136 +385,129 @@ h1 {
     visibility: hidden;
   }
 
-  /* Tampilkan label dan batch-page */
   .label-print,
-  .label-print *,
-  .batch-page,
-  .batch-page * {
+  .label-print * {
     visibility: visible;
   }
 
-  /* Container wrapper untuk batch */
-  div[style*="display: none"] > div {
-    visibility: visible !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-flow: row;
-    grid-gap: 0;
-    width: 14cm;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    page-break-after: always;
-  }
-
-  /* Batch page - HAPUS page-break */
   .batch-page {
-    position: relative;
+    visibility: visible;
     width: 7cm;
     height: 5cm;
     margin: 0;
     padding: 0;
+    page-break-after: always;
     page-break-inside: avoid;
-    display: block;
   }
 
-  /* Label */
   .label-print {
-    position: absolute;
-    left: 5mm;
-    top: 1mm;
-    width: calc(7cm - 6mm);
-    height: calc(5cm - 5mm);
-    padding: 0.2cm;
-    border: 1px solid black;
-    box-sizing: border-box;
+    width: 7cm;
+    height: 5cm;
+    border: 1px solid #000;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    font-family: sans-serif;
     background: white;
-  }
-
-  /* --- Top (NO PACKING) --- */
-  .print-top-no-packing {
-    font-size: 10pt;
-    font-weight: bold;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    padding: 0.15cm;
     margin: 0;
-    padding: 0;
-    line-height: 1;
-    width: 100%;
-    border-bottom: 1px solid black;
-    padding-bottom: 0.1cm;
   }
 
-  /* --- Barcode Area --- */
-  .print-barcode-area {
-    flex-grow: 1;
+  /* Top Section: QR Code + Info */
+  .print-top-section {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0.4cm 0 0.2cm 0;
-    padding: 0;
-    overflow: hidden;
-    position: relative;
+    align-items: flex-start;
+    gap: 0.15cm;
+    padding-bottom: 0.15cm;
+    border-bottom: 1px solid #000;
+    flex-shrink: 0;
   }
-  .print-barcode-area svg {
-    height: 2.8cm !important;
-    width: 100% !important;
+
+  .qr-code-box {
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    width: 70px;
+    height: 70px;
+  }
+
+  .qr-code-box svg {
+    width: 70px !important;
+    height: 70px !important;
     display: block;
   }
-  .print-barcode-area text {
-    display: none;
-  }
-  .print-barcode-area > *:not(svg) {
-    display: none !important;
-  }
 
-  /* --- Middle Info (NO SPK, QTY) --- */
-  .print-middle-info {
+  .print-info-column {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 7pt;
-    font-weight: bold;
-    margin-top: 0.2cm;
-    padding: 0;
-    line-height: 1;
-    border-top: 1px solid black;
-    padding-top: 0.1cm;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+    gap: 0;
+    padding: 2px 0;
   }
-  .print-middle-info span {
-    flex-basis: 48%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .print-spk-no {
-    text-align: left;
-  }
+
+  .print-packing-no,
+  .print-spk-no,
+  .print-nomor-po,
   .print-qty {
-    text-align: right;
+    display: block;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
   }
 
-  /* --- Nama SPK --- */
+  .print-packing-no {
+    font-size: 9pt;
+    font-weight: bold;
+  }
+
+  /* Middle Section: Nama SPK & Detail Ukuran */
+  .print-middle-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+    min-height: 0;
+  }
+
   .print-nama-spk {
-    font-size: 7pt;
-    font-weight: bold;
-    margin: 0.1cm 0 0 0;
-    padding: 0;
-    line-height: 1;
+    margin: 0 !important;
+    padding: 2px 2px !important;
+    font-size: 16pt !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    line-height: 1.1 !important;
+    word-wrap: break-word !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
-  /* --- Detail Ukuran --- */
   .print-detail-ukuran {
-    font-size: 6pt;
-    font-weight: bold;
-    margin: 0.1cm 0 0 0;
-    padding: 0;
-    line-height: 1;
+    margin: 0 !important;
+    padding: 2px 2px !important;
+    font-size: 13pt !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .print-page-wrapper {
+    width: 7cm; /* Satu kolom saja */
+    height: auto;
+    display: flex;
+    flex-direction: column; /* 🔥 Tumpuk ke bawah */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.1cm; /* Jarak antar label */
+    page-break-after: always;
   }
 }

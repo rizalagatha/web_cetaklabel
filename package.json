@@ -12,8 +12,8 @@
   "dependencies": {
     "axios": "^1.12.2",
     "feather-icons": "^4.29.2",
+    "qrcode.react": "^4.2.0",
     "react": "^19.1.1",
-    "react-barcode": "^1.6.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3",
     "react-to-print": "^3.1.1"
