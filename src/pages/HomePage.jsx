@@ -148,6 +148,7 @@ const HomePage = () => {
       if (!token) return;
       setIsLoading(true);
       setError("");
+      setSelectedPacks(new Set());
       try {
         const response = await apiClient.get("/packing/history", {
           params: { startDate, endDate, page, limit: 15 },
