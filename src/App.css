@@ -479,7 +479,7 @@
   }
 
   .print-nama-spk {
-    font-size: 14pt; /* Ukuran font diperkecil sedikit sebagai dasar */
+    font-size: 15pt; /* Ukuran font diperkecil sedikit sebagai dasar */
     font-weight: bold;
     line-height: 1.2; /* Beri sedikit ruang antar baris jika wrap */
     word-wrap: break-word; /* Izinkan pemotongan kata jika perlu */
