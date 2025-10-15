@@ -13,11 +13,28 @@ const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 // ====================================================================
 
 const LabelPrintOut = React.forwardRef(({ data }, ref) => {
-  if (!data) return null;
+  // HOOKS HARUS DI ATAS SEBELUM CONDITIONAL RETURN
+  const [spkFontSize, setSpkFontSize] = useState("16pt");
 
-  const totalQty = data.items.reduce((sum, item) => sum + item.packd_qty, 0);
-  const detailUkuranText = data.header.detail_ukuran || "";
-  const nomorPO = data.header.nomor_po || "N/A";
+  // Hitung data sebelum conditional
+  const namaSPK = data?.header?.pack_nama_spk || "Nama SPK Tidak Tersedia";
+  const totalQty =
+    data?.items?.reduce((sum, item) => sum + (item.packd_qty || 0), 0) || 0;
+  const detailUkuranText = data?.header?.detail_ukuran || "";
+  const nomorPO = data?.header?.nomor_po || "N/A";
+
+  // useEffect untuk adjust font size
+  useEffect(() => {
+    const characterLimit = 35;
+    if (namaSPK.length > characterLimit) {
+      setSpkFontSize("14pt");
+    } else {
+      setSpkFontSize("16pt");
+    }
+  }, [namaSPK]);
+
+  // CONDITIONAL RETURN SETELAH HOOKS
+  if (!data) return null;
 
   return (
     <div ref={ref} className="label-print">
@@ -26,11 +43,11 @@ const LabelPrintOut = React.forwardRef(({ data }, ref) => {
         <div className="qr-code-box">
           <QRCodeCanvas
             value={data.header.pack_nomor}
-            size={70} // QR Code lebih kecil
+            size={70}
             bgColor={"#ffffff"}
             fgColor={"#000000"}
             level={"L"}
-            includeMargin={true}
+            includeMargin={false}
           />
         </div>
         {/* Bagian Kanan: Info SPK & QTY */}
@@ -38,20 +55,27 @@ const LabelPrintOut = React.forwardRef(({ data }, ref) => {
           <span className="print-packing-no">{data.header.pack_nomor}</span>
           <span className="print-spk-no">{data.header.pack_spk_nomor}</span>
           <span className="print-nomor-po">{nomorPO}</span>
-          <span className="print-qty">TOTAL QTY: {totalQty}</span>
+          <span className="print-nomor-po">TOTAL QTY: {totalQty}</span>
         </div>
       </div>
 
       {/* Bagian Bawah: Nama SPK & Detail Ukuran */}
-      <div className="print-bottom-section">
-        <p className="print-nama-spk">
-          {data.header.pack_nama_spk || "Nama SPK Tidak Tersedia"}
+      <div className="print-middle-section">
+        <p
+          className="print-nama-spk"
+          style={{ textAlign: "center", fontSize: spkFontSize }}
+        >
+          {namaSPK}
         </p>
-        <p className="print-detail-ukuran">{detailUkuranText}</p>
+        <p className="print-detail-ukuran" style={{ textAlign: "center" }}>
+          {detailUkuranText}
+        </p>
       </div>
     </div>
   );
 });
+
+LabelPrintOut.displayName = "LabelPrintOut";
 
 const BatchPrintComponent = React.forwardRef(
   ({ packNomors, apiClient }, ref) => {

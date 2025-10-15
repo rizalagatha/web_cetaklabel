@@ -479,15 +479,14 @@
   }
 
   .print-nama-spk {
-    font-size: 15pt; /* Ukuran font diperkecil sedikit sebagai dasar */
-    font-weight: bold;
-    line-height: 1.2; /* Beri sedikit ruang antar baris jika wrap */
-    word-wrap: break-word; /* Izinkan pemotongan kata jika perlu */
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    /* Hapus !important agar lebih mudah di-override jika perlu */
+    margin: 0 !important;
+    padding: 2px 2px !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    line-height: 1.1 !important;
+    word-wrap: break-word !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
   .print-detail-ukuran {
