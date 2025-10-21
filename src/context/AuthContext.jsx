@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     const response = await apiClient.post("/auth/login", {
       user_kode: userKode,
       user_password: password,
+      source: "web-cetak",
     });
     const newToken = response.data.data.token;
     if (newToken) {
