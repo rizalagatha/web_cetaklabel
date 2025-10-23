@@ -127,21 +127,39 @@ const BatchPrintComponent = React.forwardRef(
   }
 );
 
-const HistoryItem = ({ item, onSelect }) => (
-  <div className="history-item">
-    <div className="history-info">
-      <span className="history-pack-nomor">{item.pack_nomor}</span>
-      <span className="history-spk-nomor">SPK: {item.pack_spk_nomor}</span>
+const HistoryItem = ({ item, isSelected, onToggleSelect, onDelete }) => {
+  if (!item || !item.pack_nomor) {
+    return null;
+  }
+  return (
+    <div className={`history-item ${isSelected ? "selected" : ""}`}>
+      <input
+        type="checkbox"
+        checked={isSelected}
+        onChange={() => onToggleSelect(item.pack_nomor)}
+        className="history-checkbox"
+      />
+      <div className="history-info">
+        <span className="history-pack-nomor">{item.pack_nomor}</span>
+        <span className="history-spk-nomor">
+          SPK: {item.pack_spk_nomor || ""}
+        </span>
+      </div>
+      <span className="history-tanggal">
+        {item.pack_tanggal
+          ? new Date(item.pack_tanggal).toLocaleDateString("id-ID")
+          : ""}
+      </span>
+      {/* --- TOMBOL DELETE DITAMBAHKAN DI SINI --- */}
+      <button
+        className="delete-button"
+        onClick={() => onDelete(item.pack_nomor)}
+      >
+        Hapus
+      </button>
     </div>
-    <span className="history-tanggal">
-      {new Date(item.pack_tanggal).toLocaleDateString("id-ID")}
-    </span>
-    <button className="view-button" onClick={() => onSelect(item.pack_nomor)}>
-      Lihat & Cetak
-    </button>
-  </div>
-);
-
+  );
+};
 // --- KOMPONEN UTAMA HALAMAN HOME ---
 
 const HomePage = () => {
@@ -246,6 +264,31 @@ const HomePage = () => {
     documentTitle: "Label Packing Massal",
   });
 
+  const handleDeletePacking = async (packNomor) => {
+    if (
+      !window.confirm(
+        `Anda yakin ingin menghapus packing ${packNomor}? Data ini tidak bisa dikembalikan.`
+      )
+    ) {
+      return;
+    }
+
+    setError("");
+    try {
+      // Panggil API delete yang sudah ada di backend
+      const response = await apiClient.delete(
+        `/packing/${encodeURIComponent(packNomor)}`
+      );
+      alert(response.data.message); // Tampilkan notifikasi sukses
+
+      // Muat ulang daftar riwayat setelah berhasil hapus
+      fetchHistory(pagination.currentPage);
+    } catch (err) {
+      const message = err.response?.data?.message || "Gagal menghapus packing.";
+      setError(message); // Tampilkan error
+    }
+  };
+
   return (
     <div className="container">
       <div className="main-header">
@@ -314,24 +357,13 @@ const HomePage = () => {
           <p className="loading-text">Memuat riwayat...</p>
         ) : history.length > 0 ? (
           history.map((item) => (
-            <div key={item.pack_nomor} className="history-item">
-              <input
-                type="checkbox"
-                checked={selectedPacks.has(item.pack_nomor)}
-                onChange={(e) =>
-                  handleSelectionChange(item.pack_nomor, e.target.checked)
-                }
-              />
-              <div className="history-info">
-                <span className="history-pack-nomor">{item.pack_nomor}</span>
-                <span className="history-spk-nomor">
-                  SPK: {item.pack_spk_nomor}
-                </span>
-              </div>
-              <span className="history-tanggal">
-                {new Date(item.pack_tanggal).toLocaleDateString("id-ID")}
-              </span>
-            </div>
+            <HistoryItem
+              key={item.pack_nomor}
+              item={item}
+              isSelected={selectedPacks.has(item.pack_nomor)}
+              onToggleSelect={handleSelectionChange}
+              onDelete={handleDeletePacking} // -> Teruskan fungsi hapus ke komponen
+            />
           ))
         ) : (
           <p className="empty-history-text">
