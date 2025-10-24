@@ -136,7 +136,7 @@ const HistoryItem = ({ item, isSelected, onToggleSelect, onDelete }) => {
       <input
         type="checkbox"
         checked={isSelected}
-        onChange={() => onToggleSelect(item.pack_nomor)}
+        onChange={(e) => onToggleSelect(item.pack_nomor, e.target.checked)}
         className="history-checkbox"
       />
       <div className="history-info">
