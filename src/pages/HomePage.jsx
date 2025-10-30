@@ -127,7 +127,13 @@ const BatchPrintComponent = React.forwardRef(
   }
 );
 
-const HistoryItem = ({ item, isSelected, onToggleSelect, onDelete }) => {
+const HistoryItem = ({
+  item,
+  isSelected,
+  onToggleSelect,
+  onDelete,
+  onEdit,
+}) => {
   if (!item || !item.pack_nomor) {
     return null;
   }
@@ -150,7 +156,9 @@ const HistoryItem = ({ item, isSelected, onToggleSelect, onDelete }) => {
           ? new Date(item.pack_tanggal).toLocaleDateString("id-ID")
           : ""}
       </span>
-      {/* --- TOMBOL DELETE DITAMBAHKAN DI SINI --- */}
+      <button className="view-button" onClick={() => onEdit(item.pack_nomor)}>
+        Edit
+      </button>
       <button
         className="delete-button"
         onClick={() => onDelete(item.pack_nomor)}
@@ -160,13 +168,41 @@ const HistoryItem = ({ item, isSelected, onToggleSelect, onDelete }) => {
     </div>
   );
 };
+
+// --- Komponen LabelPrintOut (UNTUK PREVIEW) ---
+// Kita akan buat komponen baru untuk daftar item yang bisa diedit
+const EditablePackingItem = ({ item, onQtyChange, onDelete }) => (
+  <div className="editable-item">
+    <div className="item-info">
+      <span className="item-name">
+        {item.brg_kaosan || item.nama} ({item.packd_size || item.ukuran})
+      </span>
+      <span className="item-barcode">{item.packd_barcode || item.barcode}</span>
+    </div>
+    <div className="qty-controls">
+      <button
+        className="qty-btn minus"
+        onClick={() => onQtyChange(-1)}
+        disabled={(item.packd_qty || item.qty) <= 1}
+      >
+        -
+      </button>
+      <span className="item-qty">{item.packd_qty || item.qty}</span>
+      <button className="qty-btn plus" onClick={() => onQtyChange(1)}>
+        +
+      </button>
+    </div>
+    <button className="item-delete-btn" onClick={onDelete}>
+      &times;
+    </button>
+  </div>
+);
 // --- KOMPONEN UTAMA HALAMAN HOME ---
 
 const HomePage = () => {
   const { logout, apiClient, token } = useAuth();
 
   const [history, setHistory] = useState([]);
-  // const [packingData, setPackingData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -177,13 +213,17 @@ const HomePage = () => {
     currentPage: 1,
     totalPages: 1,
   });
+  const [editingData, setEditingData] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   // const labelRef = useRef(null);
   const batchPrintRef = useRef();
 
   useEffect(() => {
-    feather.replace();
-  }, []);
+    if (typeof feather !== "undefined") {
+      feather.replace();
+    }
+  });
 
   const fetchHistory = useCallback(
     async (page = 1) => {
@@ -289,6 +329,80 @@ const HomePage = () => {
     }
   };
 
+  const handleOpenEditModal = useCallback(
+    async (nomorUntukEdit) => {
+      if (!nomorUntukEdit) return;
+      setIsLoading(true);
+      setError("");
+      setEditingData(null);
+      try {
+        const response = await apiClient.get(
+          `/packing/${encodeURIComponent(nomorUntukEdit)}`
+        );
+        setEditingData(response.data.data);
+      } catch (err) {
+        setError("Nomor Packing tidak ditemukan.", err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [apiClient]
+  );
+
+  const handleModalQtyChange = (barcode, delta) => {
+    setEditingData((prev) => {
+      const newItems = prev.items
+        .map((item) => {
+          if ((item.packd_barcode || item.barcode) === barcode) {
+            const currentQty = item.packd_qty || item.qty;
+            const newQty = currentQty + delta;
+            return { ...item, packd_qty: newQty, qty: newQty };
+          }
+          return item;
+        })
+        .filter((item) => (item.packd_qty || item.qty) > 0); // Auto-hapus jika qty 0
+
+      return { ...prev, items: newItems };
+    });
+  };
+
+  const handleRemoveItemFromModal = (barcode) => {
+    setEditingData((prev) => ({
+      ...prev,
+      items: prev.items.filter(
+        (item) => (item.packd_barcode || item.barcode) !== barcode
+      ),
+    }));
+  };
+
+  const handleSaveChanges = async () => {
+    if (!editingData) return;
+
+    const { header, items } = editingData;
+    setIsSaving(true);
+    setError("");
+
+    if (items.length === 0) {
+      setError("Koreksi gagal: Packing tidak boleh kosong.");
+      setIsSaving(false);
+      return;
+    }
+
+    try {
+      await apiClient.put(`/packing/${encodeURIComponent(header.pack_nomor)}`, {
+        items,
+      });
+      alert("Packing berhasil dikoreksi!");
+      setEditingData(null);
+      fetchHistory(pagination.currentPage);
+    } catch (err) {
+      const message = err.response?.data?.message || "Gagal menyimpan koreksi.";
+      setError(message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="container">
       <div className="main-header">
@@ -339,7 +453,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {error && <p className="error-text">{error}</p>}
+      {error && !editingData && <p className="error-text">{error}</p>}
 
       <div className="history-list">
         <div className="history-header">
@@ -363,6 +477,7 @@ const HomePage = () => {
               isSelected={selectedPacks.has(item.pack_nomor)}
               onToggleSelect={handleSelectionChange}
               onDelete={handleDeletePacking} // -> Teruskan fungsi hapus ke komponen
+              onEdit={handleOpenEditModal}
             />
           ))
         ) : (
@@ -391,6 +506,58 @@ const HomePage = () => {
           >
             Berikutnya
           </button>
+        </div>
+      )}
+      {editingData && (
+        <div className="print-preview-overlay">
+          <div className="print-preview-modal">
+            <div className="print-header">
+              <h3>Koreksi Packing: {editingData.header.pack_nomor}</h3>
+              <button
+                onClick={() => {
+                  setEditingData(null);
+                  setError("");
+                }}
+                className="close-button"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="editable-list">
+              {editingData.items.map((item, index) => (
+                <EditablePackingItem
+                  key={index}
+                  item={item}
+                  onQtyChange={(delta) =>
+                    handleModalQtyChange(
+                      item.packd_barcode || item.barcode,
+                      delta
+                    )
+                  }
+                  onDelete={() =>
+                    handleRemoveItemFromModal(
+                      item.packd_barcode || item.barcode
+                    )
+                  }
+                />
+              ))}
+            </div>
+
+            {error && (
+              <p className="error-text" style={{ margin: "10px 0" }}>
+                {error}
+              </p>
+            )}
+
+            <button
+              className="print-button"
+              onClick={handleSaveChanges}
+              disabled={isSaving}
+            >
+              {isSaving ? "Menyimpan..." : "Simpan Perubahan"}
+            </button>
+          </div>
         </div>
       )}
     </div>
