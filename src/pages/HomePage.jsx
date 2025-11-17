@@ -302,6 +302,13 @@ const HomePage = () => {
   const handleBatchPrint = useReactToPrint({
     contentRef: batchPrintRef,
     documentTitle: "Label Packing Massal",
+    onBeforeGetContent: async () => {
+      // Paksa React merender ulang komponen batch dulu
+      return new Promise((resolve) => {
+        setTimeout(resolve, 300);
+        // Waktu 300ms memberi kesempatan useEffect fetch data selesai
+      });
+    },
   });
 
   const handleDeletePacking = async (packNomor) => {
@@ -446,6 +453,7 @@ const HomePage = () => {
         {/* Area tersembunyi untuk komponen yang akan dicetak */}
         <div style={{ display: "none" }}>
           <BatchPrintComponent
+            key={Array.from(selectedPacks).join(",")}
             ref={batchPrintRef}
             packNomors={Array.from(selectedPacks)}
             apiClient={apiClient}
