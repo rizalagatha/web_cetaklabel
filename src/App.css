@@ -164,7 +164,9 @@
   cursor: pointer;
   border-radius: 6px;
   margin-left: 10px;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
   font-weight: 500;
 }
 
@@ -472,7 +474,10 @@
 @media print {
   @page {
     size: 7cm 5cm landscape;
+
+    /* OPSI 1: Geser dari Page Margin (Direkomendasikan untuk printer thermal) */
     margin: 0;
+    /* Jika printer Abang tidak punya batas tepi hardware otomatis, gunakan: margin-left: 0.2cm; */
     padding: 0;
   }
 
@@ -507,13 +512,20 @@
   .label-print {
     width: 7cm;
     height: 5cm;
+
+    /* Hapus border hitam ini jika tidak ingin kotak hitamnya ikut tercetak di kertas asli */
     border: 1px solid #000;
+    border: none;
+
     display: flex;
     flex-direction: column;
     background: white;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
-    padding: 0.15cm;
+
+    /* PERBAIKAN UTAMA SAAT CETAK: Tambah padding kiri */
+    /* Kiri digeser 0.35cm (bisa disesuaikan, misal 0.4cm atau 0.5cm jika masih kurang) */
+    padding: 0.15cm 0.15cm 0.15cm 0.35cm;
     margin: 0;
   }
 
